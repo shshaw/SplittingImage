@@ -1,0 +1,34 @@
+.splitting-image {
+  background-size: cover;
+  position: relative;
+  visibility: hidden;
+  overflow: hidden;
+}
+
+.splitting-image img {
+  display: block;
+}
+
+.split-cell {
+  --row-size: calc(100% / var(--row-total));
+  --col-size: calc(100% / var(--col-total));
+  background: inherit;
+  position: absolute;
+  overflow: hidden;
+  top: calc(var(--row-size) * var(--row-index));
+  left: calc(var(--col-size) * var(--col-index));
+  width: calc(1px + var(--col-size));
+  height: calc(1px + var(--row-size));
+}
+
+.split-cell__inner {
+  position: absolute;
+  visibility: visible;
+  background: inherit;
+  width: calc(100% * var(--col-total));
+  height: calc(100% * var(--row-total));
+  transform: translate(
+    calc(-1 * var(--col-size) * var(--col-index)),
+    calc(-1 * var(--row-size) * var(--row-index))
+  );
+}

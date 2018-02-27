@@ -1,6 +1,6 @@
 {
   "name": "splitting-image",
-  "version": "0.5.0",
+  "version": "0.5.2",
   "description":
     "Microlibrary to split a DOM element image with elements populated with CSS vars.",
   "main": "splitting-image.js",

@@ -28,13 +28,12 @@ function SplittingImage(els, opts) {
  * Convert selector or NodeList to array for easier manipulation.
  *
  * @param {*} els - Elements or selector
- * @param {*} parent
  */
-function $(els, parent) {
+function $(els) {
   return Array.prototype.slice.call(
     els.nodeName
       ? [els]
-      : els[0].nodeName ? els : (parent || document).querySelectorAll(els),
+      : els[0].nodeName ? els : document.querySelectorAll(els),
     0
   );
 }
@@ -49,13 +48,6 @@ SplittingImage.$ = $;
  * @param {Boolean} space - Add a space to each split if index is greater than 0. Mainly for `Splitting.words`
  */
 function split(el, opts) {
-  // Remove element from DOM to prevent unnecessary thrashing.
-  var parent = el.parentNode;
-  if (parent) {
-    var temp = document.createTextNode("");
-    parent.replaceChild(temp, el);
-  }
-
   var img =
       opts.image || (el.dataset && el.dataset.image) || el.currentSrc || el.src,
     rows = opts.rows || (el.dataset && el.dataset.rows) || 1,
@@ -63,8 +55,32 @@ function split(el, opts) {
     row = 0,
     col = 0,
     cells = [],
+    parent = el.parentNode,
     cell,
     inner;
+
+  // Use fragment to prevent unnecessary DOM thrashing.
+  var fragment = document.createDocumentFragment();
+
+  for (; row < rows; row++) {
+    for (col = 0; col < cols; col++) {
+      // Create a span
+      cell = document.createElement("span");
+      cell.className = "split-cell";
+      cell.style.setProperty("--row-index", row);
+      cell.style.setProperty("--col-index", col);
+      cell.style.setProperty("--cell-index", cells.length);
+      cell.setAttribute("data-row", row);
+      cell.setAttribute("data-col", col);
+
+      inner = document.createElement("span");
+      inner.className = "split-cell__inner";
+      cell.appendChild(inner);
+
+      fragment.appendChild(cell);
+      cells.push(cell);
+    }
+  }
 
   if (!img) {
     img = el.querySelector("img");
@@ -75,32 +91,12 @@ function split(el, opts) {
     el.style.setProperty("background-image", "url(" + img + ")");
   }
 
-  for (; row < rows; row++) {
-    for (col = 0; col < cols; col++) {
-      // Create a span
-      cell = document.createElement("div");
-      cell.className = "split-cell";
-      cell.style.setProperty("--row-index", row);
-      cell.style.setProperty("--col-index", col);
-      cell.style.setProperty("--cell-index", cells.length);
-      cell.setAttribute("data-row", row);
-      cell.setAttribute("data-col", col);
-      inner = document.createElement("span");
-      inner.className = "split-cell__inner";
-      cell.appendChild(inner);
-      el.appendChild(cell);
-      cells.push(cell);
-    }
-  }
-
   el.style.setProperty("--row-total", rows);
   el.style.setProperty("--col-total", cols);
   el.style.setProperty("--cell-total", cells.length);
 
-  // Put the element back into the DOM
-  if (parent) {
-    parent.replaceChild(el, temp);
-  }
+  // Append elements back into the parent
+  el.appendChild(fragment);
 
   return {
     el: el,

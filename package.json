@@ -1,24 +1,31 @@
 {
   "name": "splitting-image",
   "version": "0.5.0",
-  "description":
-    "Microlibrary to split a DOM element image with elements populated with CSS vars.",
+  "description": "Microlibrary to split a DOM element image with elements populated with CSS vars.",
   "main": "splitting-image.js",
   "scripts": {
-    "build":
-      "rollup src/splitting-image.js --output.format umd --name 'SplittingImage' --output.file splitting-image.js && uglifyjs -c -m -o splitting-image.min.js -- splitting-image.js && npm run sizes",
-    "sizes":
-      "gzip -9 -c splitting-image.min.js | wc -c && cat splitting-image.min.js | wc -c"
+    "build": "rollup src/splitting-image.js --output.format umd --name \"SplittingImage\" --output.file splitting-image.js && uglifyjs -c -m -o splitting-image.min.js -- splitting-image.js && npm run sizes",
+    "sizes": "gzip -9 -c splitting-image.min.js | wc -c && cat splitting-image.min.js | wc -c"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/shshaw/SplittingImage.git"
   },
-  "keywords": ["split", "splitting", "image", "row", "col", "grid"],
+  "keywords": [
+    "split",
+    "splitting",
+    "image",
+    "row",
+    "col",
+    "grid"
+  ],
   "author": "Stephen Shaw (stephen@brokensquare.com)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/shshaw/SplittingImage/issues"
   },
-  "homepage": "https://github.com/shshaw/SplittingImage#readme"
+  "homepage": "https://github.com/shshaw/SplittingImage#readme",
+  "devDependencies": {
+    "rollup": "^0.56.3"
+  }
 }

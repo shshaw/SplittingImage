@@ -45,9 +45,8 @@ SplittingImage.$ = $;
 function split(el, opts) {
   // Remove element from DOM to prevent unnecessary thrashing.
   var parent = el.parentNode;
-  if (parent) {
-    var temp = document.createTextNode("");
-    parent.replaceChild(temp, el);
+  if (parent) { 
+    parent.replaceChild(document.createTextNode(""), el);
   }
 
   var img =

@@ -1,12 +1,15 @@
 {
   "name": "splitting-image",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "description":
     "Microlibrary to split a DOM element image with elements populated with CSS vars.",
   "main": "splitting-image.js",
   "scripts": {
-    "build":
-      "rollup src/splitting-image.js --output.format umd --name 'SplittingImage' --output.file splitting-image.js && uglifyjs -c -m -o splitting-image.min.js -- splitting-image.js && npm run sizes",
+    "build": "npm run build:rollup && npm run build:uglify && npm run sizes",
+    "build:rollup":
+      "rollup src/splitting-image.js --output.format umd --name 'SplittingImage' --output.file splitting-image.js --banner \"/*! SplittingImage, ${npm_package_version} https://github.com/shshaw/SplittingImage/ @license MIT */\"",
+    "build:uglify":
+      "uglifyjs -c -m --comments -o splitting-image.min.js -- splitting-image.js",
     "sizes":
       "gzip -9 -c splitting-image.min.js | wc -c && cat splitting-image.min.js | wc -c"
   },
@@ -20,5 +23,9 @@
   "bugs": {
     "url": "https://github.com/shshaw/SplittingImage/issues"
   },
-  "homepage": "https://github.com/shshaw/SplittingImage#readme"
+  "homepage": "https://github.com/shshaw/SplittingImage#readme",
+  "devDependencies": {
+    "rollup": "^0.55.5",
+    "uglify-js": "^3.3.11"
+  }
 }

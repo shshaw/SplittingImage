@@ -13,7 +13,10 @@
     background-size: cover;
     visibility: hidden;
     --row-size: calc(100% / var(--row-total));
-    --col-size: calc(100% / var(--col-total));
+    --col-size: calc(100% / var(--col-total));  
+
+    --center-x: calc((var(--col-total) - 1) / 2);
+    --center-y: calc((var(--row-total) - 1) / 2);
   }
 
   .split-cell {
@@ -24,6 +27,20 @@
     left: calc(var(--col-size) * var(--col-index));
     width: calc(0.5px + var(--col-size));
     height: calc(0.5px + var(--row-size));
+    
+    /* Offset from center, positive & negative */
+    --offset-x: calc(var(--col-index) - var(--center-x));
+    --offset-y: calc(var(--row-index) - var(--center-y));
+
+    /* Absolute distance from center, only positive */
+    --distance-x: calc(
+       (var(--offset-x) * var(--offset-x)) / var(--center-x)
+    );
+
+    /* Absolute distance from center, only positive */
+    --distance-y: calc(
+       (var(--offset-y) * var(--offset-y)) / var(--center-y)
+    );
   }
 
   .split-cell__inner {

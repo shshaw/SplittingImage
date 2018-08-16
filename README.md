@@ -1,6 +1,6 @@
-# SplittingImage
-Split an image with CSS vars.
 
-Full documentation and release coming soon.
+SplittingImage is now merged into [Splitting](https://splitting.js.org). Previous release is still available, but will no longer be supported. You should definitely migrate over.
 
-Examples: https://codepen.io/shshaw/pen/7061341fe7d96e83cf061d265fdce88f
+See the documentation for [`Splitting({ by: 'cells' })`](https://splitting.js.org/guide.html#cells).
+
+[Demo](https://codepen.io/shshaw/pen/PQbQgE)
